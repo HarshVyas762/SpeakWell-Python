@@ -1,0 +1,169 @@
+ToolScreen:
+    BoxLayout:
+        orientation: 'vertical'
+        canvas:
+            Rectangle:
+                source: "Back13.jpg"
+                size: self.size
+                pos: self.pos
+        MDToolbar:
+            title: "SpeakWell"
+            left_action_items: [["menu", lambda x: nav_draw.set_state()]]
+            md_bg_color:[10/356,10/365,10/365,1]
+        Widget:
+
+    NavigationLayout:
+        ScreenManager:
+            id: screen_manager
+
+            Screen:
+                name: "scr"
+
+                MDLabel:
+                    text: "Welcome! to SpeakWell!"
+                    halign: "center"
+                    color: 1,1,1,1
+                    font_size: '27sp'
+            ScreenOne:
+                name: "scr1"
+                id: HomeScreen
+
+                FloatLayout:
+                    MDLabel:
+                        text: "Speech to Text"
+                        pos_hint: {'x':.36 ,'y':.35}
+                        color: 1,1,1,1
+                        font_size: '18sp'
+                    MDFloatingActionButton:
+                        icon: "microphone"
+                        on_release: root.Btnmic()
+                        pos_hint: {'x':.43, 'y':.3}
+                    MDTextFieldRect:
+                        id: lblMessage
+                        normal_color: app.theme_cls.accent_color
+                        readonly: True
+                        color: 0, 0, 0
+                        text_hint: 'hello'
+                        size_hint: (.6,.2)
+                        color_active: 1, 0, 0, 1
+                        pos_hint: {'x':.2, 'y':.6}
+                    MDFillRoundFlatIconButton:
+                        text: "Save"
+                        icon: "content-save"
+                        size: 88, 48
+                        theme_text_color: "Custom"
+                        pos_hint: {'x':.70, 'y':.05}
+                        on_press: root.tobestop()
+
+            ScreenTwo:
+                name: "scr2"
+                FloatLayout:
+                    MDLabel:
+                        text: "Translator"
+                        pos_hint: {'x':.36 ,'y':.35}
+                        color: 1,1,1,1
+                        font_size: '18sp'
+                    MDTextFieldRect:
+
+                        color_active: 1, 0, 0, 1
+                        pos_hint: {'x':.05, 'y':.60}
+                        size_hint: (.6,.2)
+                        id: input_enter
+                        multiline: False
+                    Spinner:
+                        id: spinner_id
+                        text: "Languages"
+                        pos_hint: {'center_x':.82, 'center_y':.74}
+                        size_hint: (.3,.1)
+                        background_color: 60/356,60/365,60/365,1
+                        color: 1,1,1,1
+                        values: ['Hindi','Arabic','Gujarati','Punjabi','Bengali','Kannada','Tamil','Telugu','Marathi']
+                        on_text: root.spinner_clicked(spinner_id.text)
+                    MDLabel:
+                        id: output_enter
+                        pos_hint: {'x':.1, 'y':.1}
+                        multiline: True
+                        font_name: 'Aakar' if (spinner_id.text == 'Gujarati') else 'Amiri-Bold' if (spinner_id.text == 'Arabic') else 'NotoSansBengali-Regular' if (spinner_id.text == 'Bengali') else 'NotoSansGurmukhi-Regular' if (spinner_id.text == 'Punjabi') else 'NotoSansKannada-Regular' if (spinner_id.text == 'Kannada') else 'NotoSansTamilUI-Regular' if (spinner_id.text == 'Tamil') else 'NotoSansTelugu-Regular' if (spinner_id.text == 'Telugu') else 'NotoSansDevanagariUI-Thin' if (spinner_id.text == 'Marathi') else 'NotoSans-Regular'
+                        size_hint: .3,.5
+                        font_size: 22
+                        color: 1,1,1,1
+            Screen:
+                name: "scr3"
+                FloatLayout:
+                    MDLabel:
+                        text: "Text to Speech"
+                        pos_hint: {'x':.36 ,'y':.35}
+                        color: 1,1,1,1
+                        font_size: '18sp'
+                    MDTextFieldRect:
+                        normal_color: app.theme_cls.accent_color
+                        color_active: 1, 0, 0, 1
+                        pos_hint: {'x':.2, 'y':.6}
+                        size_hint: (.6,.2)
+                        id: enter_speech
+                        multiline: False
+
+                    MDFloatingActionButton:
+                        icon: "speaker-wireless"
+                        on_release: root.callspeak()
+                        pos_hint: {'x':.43, 'y':.3}
+
+
+        MDNavigationDrawer:
+            id: nav_draw
+            orientation: "vertical"
+            padding: "8dp"
+            spacing: "8dp"
+
+            AnchorLayout:
+                anchor_x: "left"
+                size_hint_y: None
+                height: avatar.height
+
+                Image:
+                    id: avatar
+                    size_hint: 1, 1
+                    size: "140dp", "140dp"
+                    pos_hint: 0.5,0.5
+                    source: "speak.jpeg"
+
+            ScrollView:
+                MDList:
+                    OneLineAvatarListItem:
+                        on_press:
+                            nav_draw.set_state("close")
+                            screen_manager.current = "scr"
+
+                        text: "Home"
+                        IconLeftWidget:
+                            icon: "home"
+
+                    OneLineAvatarListItem:
+                        on_press:
+                            nav_draw.set_state("close")
+                            screen_manager.current = "scr1"
+
+                        text: "Speech to Text"
+                        IconLeftWidget:
+                            icon: "microphone-plus"
+
+                    OneLineAvatarListItem:
+                        on_press:
+                            nav_draw.set_state("close")
+                            screen_manager.current = "scr2"
+                        text: "Translator"
+                        IconLeftWidget:
+                            icon: 'google-translate'
+
+                    OneLineAvatarListItem:
+                        on_press:
+                            nav_draw.set_state("close")
+                            screen_manager.current = "scr3"
+
+                        text: "Text To Speech"
+                        IconLeftWidget:
+                            icon: "text-to-speech"
+
+            Widget:
+
+

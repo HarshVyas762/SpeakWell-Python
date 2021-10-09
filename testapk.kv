@@ -1,0 +1,16 @@
+<Principal>:
+    id: HomeScreen
+    FloatLayout:
+        Button:
+            text:'BUTTON'
+            on_release: root.Btnmic()
+            size_hint: (.3,.1)
+            color: 145/255, 164/255, 130/255
+            pos_hint: {'x':.35, 'y':.3}
+        TextInput:
+            id: lblMessage
+            readonly: True
+            color: 0, 0, 0
+            text_hint: 'hello'
+            size_hint: (.6,.2)
+            pos_hint: {'x':.2, 'y':.6}
